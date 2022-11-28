@@ -25,7 +25,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                Text(text = "Hello again!")
+                Column() {
+                    TopHeader()
+                }
             }
         }
     }
@@ -46,12 +48,12 @@ fun MyApp(content: @Composable () -> Unit) {
 
 @Preview
 @Composable
-fun TopHeader(totalPerPerson: Double = 0.0) {
+fun TopHeader(totalPerPerson: Double = 134.0) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
-            .clip(shape = RoundedCornerShape(12.dp)),
+            .height(150.dp),
+        shape = RoundedCornerShape(12.dp),
         color = Color(0xFFE9D7F7)
     ) {
         Column(
@@ -59,7 +61,7 @@ fun TopHeader(totalPerPerson: Double = 0.0) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val total = DecimalFormat("###,##0.00").format(totalPerPerson)
+            val total = DecimalFormat("###,###,##0.00").format(totalPerPerson)
 
             Text(
                 text = "Total Per Person",
@@ -79,7 +81,9 @@ fun TopHeader(totalPerPerson: Double = 0.0) {
 fun DefaultPreview() {
     TipCalculatorTheme {
         MyApp {
-            Text(text = "Hello again!")
+            Column() {
+                TopHeader()
+            }
         }
     }
 }
