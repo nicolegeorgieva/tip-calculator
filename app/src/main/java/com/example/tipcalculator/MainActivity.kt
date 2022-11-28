@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tipcalculator.ui.theme.TipCalculatorTheme
+import java.text.DecimalFormat
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +46,7 @@ fun MyApp(content: @Composable () -> Unit) {
 
 @Preview
 @Composable
-fun TopHeader() {
+fun TopHeader(totalPerPerson: Double = 0.0) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,12 +59,14 @@ fun TopHeader() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            val total = DecimalFormat("###,##0.00").format(totalPerPerson)
+
             Text(
                 text = "Total Per Person",
                 style = MaterialTheme.typography.h5
             )
             Text(
-                text = "$134",
+                text = "$$total",
                 style = MaterialTheme.typography.h4,
                 fontWeight = FontWeight.ExtraBold
             )
