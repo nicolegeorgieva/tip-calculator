@@ -1,8 +1,11 @@
 package com.example.tipcalculator.components
 
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -23,6 +26,12 @@ fun InputField(
     OutlinedTextField(
         value = valueState.value,
         onValueChange = { valueState.value = it },
-        label = { Text(text = labelId) }
+        label = { Text(text = labelId) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Rounded.Refresh,
+                contentDescription = "Money Icon"
+            )
+        }
     )
 }
