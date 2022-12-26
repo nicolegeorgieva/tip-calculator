@@ -87,6 +87,15 @@ fun TopHeader(totalPerPerson: Double = 134.0) {
 @Preview
 @Composable
 fun MainContent() {
+    BillForm()
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun BillForm(
+    modifier: Modifier = Modifier,
+    onValChange: (String) -> Unit = {}
+) {
     val totalBillState = remember {
         mutableStateOf("")
     }
@@ -112,7 +121,8 @@ fun MainContent() {
                 isSingleLine = true,
                 onAction = KeyboardActions {
                     if (!validState) return@KeyboardActions
-                    //To-Do - onvaluechanged
+
+                    onValChange(totalBillState.value.trim())
 
                     keyboardController?.hide()
                 }
