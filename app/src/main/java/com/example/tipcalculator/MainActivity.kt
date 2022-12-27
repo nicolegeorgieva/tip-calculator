@@ -107,6 +107,10 @@ fun BillForm(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    var splittingNumberState by remember {
+        mutableStateOf(1)
+    }
+
     var sliderPositionState by remember {
         mutableStateOf(0f)
     }
@@ -152,11 +156,6 @@ fun BillForm(
                     modifier = Modifier.padding(horizontal = 3.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-
-                    var splittingNumberState by remember {
-                        mutableStateOf(1)
-                    }
-
                     RoundIconButton(imageVector = Icons.Default.Remove, onClick = {
                         if (splittingNumberState > 1) {
                             splittingNumberState -= 1
@@ -170,9 +169,11 @@ fun BillForm(
                             .padding(start = 9.dp, end = 9.dp)
                     )
 
-                    RoundIconButton(
-                        imageVector = Icons.Default.Add,
-                        onClick = { splittingNumberState += 1 })
+                    RoundIconButton(imageVector = Icons.Default.Add, onClick = {
+                        if (splittingNumberState < 100) {
+                            splittingNumberState += 1
+                        }
+                    })
                 }
             }
 
@@ -199,16 +200,15 @@ fun BillForm(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 //Slider
-                Slider(
-                    value = sliderPositionState, onValueChange = { newVal ->
+                Slider(value = sliderPositionState,
+                    onValueChange = { newVal ->
                         sliderPositionState = newVal
                     },
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     steps = 5,
                     onValueChangeFinished = {
 
-                    }
-                )
+                    })
             }
 
 //            } else {
