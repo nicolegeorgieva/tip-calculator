@@ -1,7 +1,6 @@
 package com.example.tipcalculator
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -26,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tipcalculator.components.InputField
 import com.example.tipcalculator.ui.theme.TipCalculatorTheme
+import com.example.tipcalculator.util.calculateTotalTip
 import com.example.tipcalculator.widgets.RoundIconButton
 import java.text.DecimalFormat
 
@@ -117,6 +117,10 @@ fun BillForm(
 
     var tipPercentage = (sliderPositionState * 100).toInt()
 
+    val tipAmountState = remember {
+        mutableStateOf(0.0)
+    }
+
     TopHeader()
 
     Surface(
@@ -188,7 +192,7 @@ fun BillForm(
                 Spacer(modifier = Modifier.width(200.dp))
 
                 Text(
-                    text = "$33.00",
+                    text = "$ ${tipAmountState.value}",
                     modifier = Modifier.align(alignment = Alignment.CenterVertically)
                 )
             }
@@ -205,6 +209,11 @@ fun BillForm(
                 Slider(value = sliderPositionState,
                     onValueChange = { newVal ->
                         sliderPositionState = newVal
+                        tipAmountState.value =
+                            calculateTotalTip(
+                                totalBill = totalBillState.value.toDouble(),
+                                tipPercentage = tipPercentage
+                            )
                     },
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     steps = 5,
