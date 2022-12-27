@@ -45,8 +45,7 @@ fun MyApp(content: @Composable () -> Unit) {
 // A surface container using the 'background' color from the theme
     TipCalculatorTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+            modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
         ) {
             content()
         }
@@ -71,8 +70,7 @@ fun TopHeader(totalPerPerson: Double = 134.0) {
             val total = DecimalFormat("###,###,##0.00").format(totalPerPerson)
 
             Text(
-                text = "Total Per Person",
-                style = MaterialTheme.typography.h5
+                text = "Total Per Person", style = MaterialTheme.typography.h5
             )
             Text(
                 text = "$$total",
@@ -93,8 +91,7 @@ fun MainContent() {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun BillForm(
-    modifier: Modifier = Modifier,
-    onValChange: (String) -> Unit = {}
+    modifier: Modifier = Modifier, onValChange: (String) -> Unit = {}
 ) {
     val totalBillState = remember {
         mutableStateOf("")
@@ -118,8 +115,7 @@ fun BillForm(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            InputField(
-                valueState = totalBillState,
+            InputField(valueState = totalBillState,
                 labelId = "Enter Bill",
                 enabled = true,
                 isSingleLine = true,
@@ -129,60 +125,72 @@ fun BillForm(
                     onValChange(totalBillState.value.trim())
 
                     keyboardController?.hide()
-                }
-            )
+                })
 
-            if (validState) {
+//            if (validState) {
+            Row(
+                modifier = Modifier.padding(3.dp), horizontalArrangement = Arrangement.Start
+            ) {
+                Text(
+                    text = "Split",
+                    modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                )
+
+                Spacer(modifier = Modifier.width(120.dp))
+
                 Row(
-                    modifier = Modifier.padding(3.dp),
-                    horizontalArrangement = Arrangement.Start
+                    modifier = Modifier.padding(horizontal = 3.dp),
+                    horizontalArrangement = Arrangement.End
                 ) {
+
+                    var splittingNumberState by remember {
+                        mutableStateOf(1)
+                    }
+
+                    RoundIconButton(imageVector = Icons.Default.Remove, onClick = {
+                        if (splittingNumberState > 1) {
+                            splittingNumberState -= 1
+                        }
+                    })
+
                     Text(
-                        text = "Split",
-                        modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                        text = "$splittingNumberState",
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 9.dp, end = 9.dp)
                     )
 
-                    Spacer(modifier = Modifier.width(120.dp))
-
-                    Row(
-                        modifier = Modifier.padding(horizontal = 3.dp),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-
-                        var splittingNumberState by remember {
-                            mutableStateOf(1)
-                        }
-
-                        RoundIconButton(imageVector = Icons.Default.Remove,
-                            onClick = {
-                                if (splittingNumberState > 1) {
-                                    splittingNumberState -= 1
-                                }
-                            }
-                        )
-
-                        Text(
-                            text = "$splittingNumberState",
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(start = 9.dp, end = 9.dp)
-                        )
-
-                        RoundIconButton(imageVector = Icons.Default.Add,
-                            onClick = { splittingNumberState += 1 }
-                        )
-                    }
+                    RoundIconButton(
+                        imageVector = Icons.Default.Add,
+                        onClick = { splittingNumberState += 1 })
                 }
-            } else {
-                Box() {
+            }
 
-                }
+            //Tip Row
+            Row(modifier = Modifier.padding(horizontal = 3.dp, vertical = 12.dp)) {
+                Text(
+                    text = "Tip", modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                )
+
+                Spacer(modifier = Modifier.width(200.dp))
+
+                Text(
+                    text = "$33.00",
+                    modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                )
+
+
+//            } else {
+//                Box() {
+//
+//                }
+//            }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun DefaultPreview() {
     TipCalculatorTheme {
