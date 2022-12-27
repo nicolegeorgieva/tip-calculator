@@ -1,7 +1,6 @@
 package com.example.tipcalculator
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -14,9 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -152,12 +149,27 @@ fun BillForm(
                         horizontalArrangement = Arrangement.End
                     ) {
 
+                        var splittingNumberState by remember {
+                            mutableStateOf(1)
+                        }
+
                         RoundIconButton(imageVector = Icons.Default.Remove,
-                            onClick = { }
+                            onClick = {
+                                if (splittingNumberState > 1) {
+                                    splittingNumberState -= 1
+                                }
+                            }
+                        )
+
+                        Text(
+                            text = "$splittingNumberState",
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(start = 9.dp, end = 9.dp)
                         )
 
                         RoundIconButton(imageVector = Icons.Default.Add,
-                            onClick = { }
+                            onClick = { splittingNumberState += 1 }
                         )
                     }
                 }
