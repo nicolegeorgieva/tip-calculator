@@ -1,6 +1,7 @@
 package com.example.tipcalculator
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Slider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -103,6 +105,10 @@ fun BillForm(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    var sliderPositionState by remember {
+        mutableStateOf(0f)
+    }
+
     Surface(
         modifier = Modifier
             .padding(2.dp)
@@ -178,14 +184,32 @@ fun BillForm(
                     text = "$33.00",
                     modifier = Modifier.align(alignment = Alignment.CenterVertically)
                 )
+            }
 
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "33%")
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                //Slider
+                Slider(value = sliderPositionState, onValueChange = { newVal ->
+                    sliderPositionState = newVal
+                    Log.d(
+                        "Slider",
+                        "BillForm: $newVal"
+                    )
+                }
+                )
+            }
 
 //            } else {
 //                Box() {
 //
 //                }
 //            }
-            }
         }
     }
 }
