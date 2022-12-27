@@ -54,12 +54,12 @@ fun MyApp(content: @Composable () -> Unit) {
     }
 }
 
-//@Preview
 @Composable
 fun TopHeader(totalPerPerson: Double = 134.0) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(15.dp)
             .height(150.dp),
         shape = RoundedCornerShape(12.dp),
         color = Color(0xFFE9D7F7)
@@ -87,7 +87,9 @@ fun TopHeader(totalPerPerson: Double = 134.0) {
 @Preview
 @Composable
 fun MainContent() {
-    BillForm()
+    Column() {
+        BillForm()
+    }
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -109,9 +111,11 @@ fun BillForm(
         mutableStateOf(0f)
     }
 
+    TopHeader()
+
     Surface(
         modifier = Modifier
-            .padding(2.dp)
+            .padding(15.dp, 1.5.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(width = 1.dp, color = Color.LightGray)
@@ -195,13 +199,15 @@ fun BillForm(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 //Slider
-                Slider(value = sliderPositionState, onValueChange = { newVal ->
-                    sliderPositionState = newVal
-                    Log.d(
-                        "Slider",
-                        "BillForm: $newVal"
-                    )
-                }
+                Slider(
+                    value = sliderPositionState, onValueChange = { newVal ->
+                        sliderPositionState = newVal
+                    },
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                    steps = 5,
+                    onValueChangeFinished = {
+
+                    }
                 )
             }
 
