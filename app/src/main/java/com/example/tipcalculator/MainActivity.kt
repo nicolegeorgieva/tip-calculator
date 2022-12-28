@@ -144,6 +144,13 @@ fun BillForm(
                 labelId = "Enter Bill",
                 enabled = true,
                 isSingleLine = true,
+                onValueChange = {
+                    totalPerPersonState.value = calculateTotalPerPerson(
+                        totalBill = totalBillState.value.toDoubleOrNull() ?: 0.0,
+                        splitBy = splitBy.value,
+                        tipPercentage = tipPercentage
+                    )
+                },
                 onAction = KeyboardActions {
                     if (!validState) return@KeyboardActions
 

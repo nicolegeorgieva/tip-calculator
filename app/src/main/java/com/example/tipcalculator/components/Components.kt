@@ -31,11 +31,15 @@ fun InputField(
     isSingleLine: Boolean,
     keyboardType: KeyboardType = KeyboardType.Number,
     imeAction: ImeAction = ImeAction.Next,
-    onAction: KeyboardActions = KeyboardActions.Default
+    onAction: KeyboardActions = KeyboardActions.Default,
+    onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
         value = valueState.value,
-        onValueChange = { valueState.value = it },
+        onValueChange = {
+            valueState.value = it
+            onValueChange(it)
+        },
         label = { Text(text = labelId) },
         leadingIcon = {
             Icon(
