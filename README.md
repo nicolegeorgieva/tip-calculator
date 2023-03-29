@@ -1,4 +1,4 @@
-# Tip calculator
+# Tip calculator - Udemy course project
 Tip Calculator is an app for total individual bill calculation taking into account bill amount, split number (1-100 people) and tip percentage (%).
 
 |          |             |
